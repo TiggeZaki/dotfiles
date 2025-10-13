@@ -1,0 +1,7 @@
+unlet! skip_defaults_vim
+source $VIMRUNTIME/defaults.vim
+
+set mouse=
+
+set number
+set laststatus=2

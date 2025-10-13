@@ -1,0 +1,14 @@
+vim
+curl
+wget
+
+bat
+eza
+fzf
+zoxide
+
+wl-clipboard
+
+zsh
+sheldon
+starship

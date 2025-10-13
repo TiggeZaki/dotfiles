@@ -1,0 +1,9 @@
+[init]
+	defaultBranch = main
+[fetch]
+	prune = true
+[user]
+        name = TiggeZaki
+        email = 82169475+TiggeZaki@users.noreply.github.com
+[credential]
+	helper = /mnt/c/Program\\ Files/Git/mingw64/bin/git-credential-manager.exe
