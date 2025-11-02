@@ -2,6 +2,8 @@
 	defaultBranch = main
 [fetch]
 	prune = true
+[pull]
+	ff = only
 [user]
         name = TiggeZaki
         email = 82169475+TiggeZaki@users.noreply.github.com
