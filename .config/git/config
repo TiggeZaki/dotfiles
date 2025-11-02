@@ -7,5 +7,8 @@
 [user]
         name = TiggeZaki
         email = 82169475+TiggeZaki@users.noreply.github.com
+	signingkey = 82D77D985E581C42
+[commit]
+	gpgsign = true
 [credential]
 	helper = /mnt/c/Program\\ Files/Git/mingw64/bin/git-credential-manager.exe

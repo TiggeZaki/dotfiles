@@ -33,6 +33,3 @@ inline = 'eval "$(starship init zsh)"'
 [plugins.fzf]
 inline = 'source <(fzf --zsh)'
 
-[plugins.zoxide]
-inline = 'eval "$(zoxide init zsh)"'
-

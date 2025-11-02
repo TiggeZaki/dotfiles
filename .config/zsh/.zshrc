@@ -1,4 +1,6 @@
-eval "$(sheldon source)"
+if command -v sheldon &> /dev/null; then
+  eval "$(sheldon source)"
+fi
 
 HISTFILE=$XDG_STATE_HOME/zsh_history
 HISTSIZE=1000
@@ -29,6 +31,7 @@ alias l="eza"
 alias la="eza -a"
 alias ll="eza -al --git --icons"
 alias lt="eza -T --icons"
+alias lta="eza -aT --icons"
 alias grep="grep --color=auto"
 alias sudo="sudo "
 alias sv="sudoedit"
