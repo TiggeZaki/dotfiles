@@ -2,8 +2,6 @@
 
 set -e
 
-#!/bin/bash
-
 # Core packages required at the system level
 core_pkgs=(zsh vim git gnupg)
 
@@ -11,35 +9,6 @@ core_pkgs=(zsh vim git gnupg)
 devtools_pkgs=(sheldon starship eza fzf)
 
 # Packages specific to the local host machine (non-container)
-local_pkgs=(curl wget wl-clipboard)
-
-install_apt() {
-  sudo apt-get install -y --no-install-recommends "$@"
-}
-
-install_pacman() {
-  sudo pacman -Syu --noconfirm --needed "$@"
-}
-
-install_brew() {
-  if command -v brew >/dev/null 2>&1; then
-    for pkg in "$@"; do
-      brew install "$pkg"
-    done
-  fi
-}
-
-safe_ln() {
-  if [ ! -e "$2" ]; then
-    ln -s "$1" "$2"
-  fi
-}
-
-main() {
-#!/bin/bash
-
-core_pkgs=(zsh vim git gnupg)
-devtools_pkgs=(sheldon starship eza fzf)
 local_pkgs=(curl wget wl-clipboard)
 
 install_apt() {
