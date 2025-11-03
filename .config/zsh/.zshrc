@@ -1,6 +1,4 @@
-if command -v sheldon &> /dev/null; then
-  eval "$(sheldon source)"
-fi
+eval "$(sheldon source)"
 
 HISTFILE=$XDG_STATE_HOME/zsh_history
 HISTSIZE=1000

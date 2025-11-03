@@ -1,6 +1,8 @@
-system_pkgs=(zsh gpg)
+#!/bin/bash
+
+system_pkgs=(zsh vim gpg)
 dev_pkgs=(sheldon starship eza fzf)
-tools_pkgs=(vim curl wget wl-clipboard)
+tools_pkgs=(curl wget wl-clipboard)
 
 install_apt() {
     sudo apt-get install -y --no-install-recommends "$@"
