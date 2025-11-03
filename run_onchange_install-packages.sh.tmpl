@@ -3,15 +3,16 @@
 set -e
 
 # Core packages required at the system level
-core_pkgs=(zsh vim git gnupg)
+core_pkgs=(zsh vim curl file git gnupg)
 
 # Developer tools, often installed via user-level managers
 devtools_pkgs=(sheldon starship eza fzf)
 
 # Packages specific to the local host machine (non-container)
-local_pkgs=(curl wget wl-clipboard)
+local_pkgs=(wget wl-clipboard)
 
 install_apt() {
+  sudo apt-get update
   sudo apt-get install -y --no-install-recommends "$@"
 }
 
@@ -20,11 +21,11 @@ install_pacman() {
 }
 
 install_brew() {
-  if command -v brew >/dev/null 2>&1; then
-    for pkg in "$@"; do
-      brew install "$pkg"
-    done
-  fi
+  NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+  for pkg in "$@"; do
+    brew install "$pkg"
+  done
 }
 
 safe_ln() {
@@ -36,18 +37,19 @@ safe_ln() {
 main() {
   {{ $id := .chezmoi.osRelease.id }}
   {{ if eq $id "arch" }}
-    pkgs=("${core_pkgs[@]}" "${devtools_pkgs[@]}")
+    local pkgs=("${core_pkgs[@]}" "${devtools_pkgs[@]}")
     {{ if not .isContainer }}
       pkgs+=("${local_pkgs[@]}")
     {{ end }}
     install_pacman "${pkgs[@]}"
   {{ else if eq $id "debian" }}
+    local pkgs=("${core_pkgs[@]}" "build-essential" "procps")
+    {{ if not .isContainer }}
+      pkgs+=("${local_pkgs[@]}")
+    {{ end }}
     sudo apt update
     install_apt "${core_pkgs[@]}"
     install_brew "${devtools_pkgs[@]}"
-    {{ if not .isContainer }}
-      install_apt "${local_pkgs[@]}"
-    {{ end }}
   {{ else }}
     echo "Unsupported distro: {{ $id }}"
     exit 1
