@@ -1,0 +1,3 @@
+[data]
+isWsl = {{ if (.chezmoi.kernel.osrelease | lower | contains "microsoft") }} true {{ else }} false {{ end }}
+isContainer = {{ if eq (env "REMOTE_CONTAINERS") "true" }} true {{ else }} false {{ end }}

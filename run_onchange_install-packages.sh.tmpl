@@ -37,7 +37,7 @@ main() {
   {{ $id := .chezmoi.osRelease.id }}
   {{ if eq $id "arch" }}
     pkgs=("${core_pkgs[@]}" "${devtools_pkgs[@]}")
-    {{ if ne (env "REMOTE_CONTAINERS") "true" }}
+    {{ if not .isContainer }}
       pkgs+=("${local_pkgs[@]}")
     {{ end }}
     install_pacman "${pkgs[@]}"
@@ -45,7 +45,7 @@ main() {
     sudo apt update
     install_apt "${core_pkgs[@]}"
     install_brew "${devtools_pkgs[@]}"
-    {{ if ne (env "REMOTE_CONTAINERS") "true" }}
+    {{ if not .isContainer }}
       install_apt "${local_pkgs[@]}"
     {{ end }}
   {{ else }}
@@ -54,7 +54,7 @@ main() {
   {{ end }}
 
   # WSL-specific tweaks, outside of tmpl block since it runs on both distros
-  {{ if (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
+  {{ if and .isWsl (not .isContainer) }}
     USERPROFILE="/mnt/c/Users/"$(basename $HOME)
 
     safe_ln "$USERPROFILE/Downloads" "$HOME/Downloads"
