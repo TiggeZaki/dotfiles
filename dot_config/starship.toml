@@ -1,0 +1,46 @@
+format = """
+$sudo\
+$directory\
+$git_branch\
+$git_status\
+$time\
+$cmd_duration\
+$line_break\
+$character"""
+
+add_newline = true 
+
+[sudo]
+disabled = false
+style = 'fg:white bg:purple'
+symbol = ' sudo'
+format = '[](fg:purple)[ $symbol ]($style)[](fg:purple)'
+
+[directory]
+style = 'fg:white bg:blue'
+format = '[](fg:blue)[  $path ]($style)[](fg:blue)'
+truncation_length = 6
+truncation_symbol = '…/'
+truncate_to_repo = false
+
+[git_branch]
+symbol = ''
+style = 'fg:black bg:green'
+format = '[](fg:green)[ $symbol $branch ]($style)'
+
+[git_status]
+style = 'fg:black bg:green'
+ahead = '⇡${count}'
+behind = '⇣${count}'
+modified = '!${count}'
+format = '[$all_status$ahead_behind ]($style)[](fg:green)'
+
+[time]
+disabled = false
+time_format = '%T'
+style = 'fg:black bg:white'
+format = '[](fg:white)[  $time ]($style)[](fg:white)'
+
+[cmd_duration]
+style = 'fg:black bg:yellow'
+format = '[](fg:yellow)[  $duration ]($style)[](fg:yellow)'
