@@ -1,8 +1,11 @@
 #!/bin/bash
 
-system_pkgs=(zsh vim gpg)
-dev_pkgs=(sheldon starship eza fzf)
-tools_pkgs=(curl wget wl-clipboard)
+# Core packages required at the system level
+core_pkgs=(zsh vim git gnupg)
+# Developer tools, often installed via user-level managers
+devtools_pkgs=(sheldon starship eza fzf)
+# Packages specific to the local host machine (non-container)
+local_pkgs=(curl wget wl-clipboard)
 
 install_apt() {
     sudo apt-get install -y --no-install-recommends "$@"
@@ -12,14 +15,27 @@ install_pacman() {
     sudo pacman -Syu --noconfirm --needed "$@"
 }
 
+safe_ln() {
+  if [ ! -e "$2" ]; then
+    ln -s "$1" "$2"
+  fi
+}
+
 main() {
     source /etc/os-release
     if [ "$ID" = "arch" ]; then
-        local all_pkgs=("${system_pkgs[@]}" "${dev_pkgs[@]}" "${tools_pkgs[@]}")
-        install_pacman "${all_pkgs[@]}"
+        local pkgs=("${core_pkgs[@]}" "${devtools_pkgs[@]}")
+        if [ "$REMOTE_CONTAINERS" != "true" ]; then
+            pkgs+=("${local_pkgs[@]}")
+        fi
+        install_pacman "${pkgs[@]}"
     elif [ "$ID" = "debian" ]; then
         sudo apt update
-        install_apt "${system_pkgs[@]}"
+        install_apt "${core_pkgs[@]}"
+        install_brew "${devtools_pkgs[@]}"
+        if [ "$is_dev_container" != "true" ]; then
+            install_apt "${tools_pkgs[@]}"
+        fi
     fi
     if [ -f /proc/sys/fs/binfmt_misc/WSLInterop ]; then \
         USERPROFILE="/mnt/c/Users/"$(basename $HOME)
