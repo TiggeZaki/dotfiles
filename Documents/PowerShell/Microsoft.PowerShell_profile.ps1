@@ -29,6 +29,7 @@ if (
 
     if ($null -ne (Get-Module -ListAvailable -Name PSFzf)) {
         Import-Module PSFzf
+        Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
     }
 }
 
