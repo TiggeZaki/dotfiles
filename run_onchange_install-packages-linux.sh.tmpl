@@ -1,9 +1,9 @@
-{{- if and (eq .chezmoi.os "linux") (or (eq .chezmoi.osRelease.id "debian") (eq .chezmoi.osRelease.id "ubuntu")) -}}
+{{- if or (eq .chezmoi.osRelease.id "debian") (eq .chezmoi.osRelease.id "ubuntu") -}}
 #!/bin/sh
 set -eu
 
 # Change this list to make chezmoi run the script again.
-packages="git starship zsh vim eza fzf"
+packages="eza fzf git starship vim zsh"
 missing=""
 
 for package in $packages; do
@@ -28,7 +28,7 @@ fi
 $sudo_cmd apt-get update
 # shellcheck disable=SC2086
 $sudo_cmd apt-get install -y $missing
-{{- else }}
+{{- else -}}
 #!/bin/sh
 # Package installation is currently supported only on Debian and Ubuntu.
 exit 0
