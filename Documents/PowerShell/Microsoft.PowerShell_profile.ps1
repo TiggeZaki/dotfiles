@@ -8,6 +8,8 @@ if ($null -ne (Get-Module -ListAvailable -Name git-completion)) {
         }
 }
 
+Set-PSReadLineOption -BellStyle None
+
 # eza shortcuts
 if (Get-Command eza) {
     function l   { eza @args }
