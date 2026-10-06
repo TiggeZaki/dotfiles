@@ -1,10 +1,12 @@
 format = """
+$os\
 $sudo\
 $directory\
 $git_branch\
 $git_status\
-$time\
+$direnv\
 $cmd_duration\
+$time\
 $line_break\
 $character"""
 
@@ -35,13 +37,45 @@ behind = '⇣${count}'
 modified = '!${count}'
 format = '[$all_status$ahead_behind ]($style)[](fg:green)'
 
+[direnv]
+disabled = false
+style = 'fg:black bg:yellow'
+format = '[](fg:yellow)[ ▼ $allowed ]($style)[](fg:yellow)'
+
 [time]
 disabled = false
 time_format = '%T'
-style = 'fg:black bg:white'
-format = '[](fg:white)[  $time ]($style)[](fg:white)'
+style = 'fg:white'
+format = '[ at  $time]($style)'
 
 [cmd_duration]
-style = 'fg:black bg:yellow'
-format = '[](fg:yellow)[  $duration ]($style)[](fg:yellow)'
+style = 'fg:bright-yellow'
+format = '[ took  $duration]($style)'
 
+[os]
+disabled = false
+style = "bg:bright-black fg:white"
+format = '[](fg:bright-black)[ $symbol ]($style)[](fg:bright-black)'
+
+[os.symbols]
+Windows = "󰍲"
+Ubuntu = "󰕈"
+SUSE = ""
+Raspbian = "󰐿"
+Mint = "󰣭"
+Macos = "󰀵"
+Manjaro = ""
+Linux = "󰌽"
+Gentoo = "󰣨"
+Fedora = "󰣛"
+Alpine = ""
+Amazon = ""
+Android = ""
+Arch = "󰣇"
+Artix = "󰣇"
+EndeavourOS = ""
+CentOS = ""
+Debian = "󰣚"
+Redhat = "󱄛"
+RedHatEnterprise = "󱄛"
+Pop = ""
