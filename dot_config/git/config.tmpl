@@ -14,6 +14,10 @@
 	colorMoved = default
 [merge]
 	conflictStyle = zdiff3
+{{- if eq .chezmoi.os "windows" }}
+[core]
+	sshCommand = C:\\\\Windows\\\\System32\\\\OpenSSH\\\\ssh.exe
+{{- end }}
 {{- if eq .chezmoi.os "linux" }}
 {{- if contains "microsoft" (lower .chezmoi.kernel.osrelease) }}
 [credential]
