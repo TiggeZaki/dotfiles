@@ -1,17 +1,25 @@
-# Load Git completion after the prompt becomes idle to keep startup responsive.
-if ($null -ne (Get-Module -ListAvailable -Name git-completion)) {
-    $null = Register-EngineEvent `
-        -SourceIdentifier ([Management.Automation.PSEngineEvent]::OnIdle) `
-        -MaxTriggerCount 1 `
-        -Action {
-            Import-Module git-completion
-        }
+# Git completion
+if (Get-Module -ListAvailable -Name git-completion) {
+    Register-ArgumentCompleter -CommandName git -Native -ScriptBlock {
+        param($wordToComplete, $commandAst, $cursorPosition)
+        Complete-Git -CommandAst $commandAst -CursorPosition $cursorPosition
+    }
 }
 
-Set-PSReadLineOption -BellStyle None
+# Interactive shell settings
+if ($Host.Name -eq 'ConsoleHost') {
+    Set-PSReadLineOption -BellStyle None
+    Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
+
+    if (Import-Module PSFzf -PassThru -ErrorAction Ignore) {
+        Set-PsFzfOption `
+            -PSReadlineChordProvider 'Ctrl+t' `
+            -PSReadlineChordReverseHistory 'Ctrl+r'
+    }
+}
 
 # eza shortcuts
-if (Get-Command eza) {
+if (Get-Command eza -ErrorAction Ignore) {
     function l   { eza @args }
     function la  { eza -a @args }
     function ll  { eza -l --git --icons @args }
@@ -20,19 +28,7 @@ if (Get-Command eza) {
     function lta { eza -aT --icons @args }
 }
 
-# Interactive completion
-if (
-    $Host.Name -eq 'ConsoleHost' -and
-    (Get-Command Set-PSReadLineKeyHandler)
-) {
-    Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
-
-    if ($null -ne (Get-Module -ListAvailable -Name PSFzf)) {
-        Import-Module PSFzf
-        Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
-    }
-}
-
-if (Get-Command starship) {
+# Starship prompt
+if (Get-Command starship -ErrorAction Ignore) {
     Invoke-Expression (&starship init powershell)
 }
