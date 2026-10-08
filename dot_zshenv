@@ -11,7 +11,7 @@ export EDITOR='vim'
 # The special `path` array keeps PATH entries unique across nested shells.
 typeset -U path PATH
 path=(
-  "$HOME/.local/bin"
+  "$HOME/.local/bin"(N-/)
   $path
 )
 export PATH

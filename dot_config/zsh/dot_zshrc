@@ -7,10 +7,6 @@ if [[ -r "$XDG_DATA_HOME/zsh/plugins/fsh/fast-syntax-highlighting.plugin.zsh" ]]
   source "$XDG_DATA_HOME/zsh/plugins/fsh/fast-syntax-highlighting.plugin.zsh"
 fi
 
-if [[ -r "$XDG_CONFIG_HOME/zsh/zshrc.local" ]]; then
-  source "$XDG_CONFIG_HOME/zsh/zshrc.local"
-fi
-
 setopt nobeep
 
 # History
@@ -30,6 +26,10 @@ setopt share_history
 typeset -g ZSH_CACHE_DIR="$XDG_CACHE_HOME/zsh"
 mkdir -p "$ZSH_CACHE_DIR"
 
+fpath=(
+  "$XDG_DATA_HOME/zsh/site-functions"(N-/)
+  $fpath
+)
 autoload -Uz compinit
 compinit -d "$ZSH_CACHE_DIR/zcompdump"
 
@@ -61,14 +61,18 @@ else
   alias ll='ls -Al'
 fi
 
-if (( $+commands[fzf] )); then
-  eval "$(fzf --zsh 2>/dev/null)"
-fi
-
 if (( $+commands[direnv] )); then
   eval "$(direnv hook zsh)"
 fi
 
+if (( $+commands[fzf] )); then
+  eval "$(fzf --zsh 2>/dev/null)"
+fi
+
 if (( $+commands[starship] )); then
   eval "$(starship init zsh)"
+fi
+
+if [[ -r "$XDG_CONFIG_HOME/zsh/zshrc.local" ]]; then
+  source "$XDG_CONFIG_HOME/zsh/zshrc.local"
 fi
