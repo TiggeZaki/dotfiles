@@ -8,7 +8,11 @@ if (Get-Module -ListAvailable -Name git-completion) {
 
 # Interactive shell settings
 if ($Host.Name -eq 'ConsoleHost') {
-    Set-PSReadLineOption -BellStyle None
+    Set-PSReadLineOption -BellStyle None -EditMode Emacs
+    Set-PSReadLineKeyHandler -Chord 'Ctrl+LeftArrow' -Function BackwardWord
+    Set-PSReadLineKeyHandler -Chord 'Ctrl+RightArrow' -Function ForwardWord
+    Set-PSReadLineKeyHandler -Chord 'Ctrl+Backspace' -Function BackwardKillWord
+    Set-PSReadLineKeyHandler -Chord 'Ctrl+Delete' -Function KillWord
     Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
 
     if (Import-Module PSFzf -PassThru -ErrorAction Ignore) {
