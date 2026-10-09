@@ -14,13 +14,15 @@
 	colorMoved = default
 [merge]
 	conflictStyle = zdiff3
-{{- if eq .chezmoi.os "windows" }}
+{% if os() == "windows" %}
 [core]
 	sshCommand = C:\\\\Windows\\\\System32\\\\OpenSSH\\\\ssh.exe
-{{- end }}
-{{- if eq .chezmoi.os "linux" }}
-{{- if contains "microsoft" (lower .chezmoi.kernel.osrelease) }}
+{% elif os() == "linux" %}
+{% if "microsoft" in exec(command="uname -r") | lower %}
 [credential]
 	helper = /mnt/c/Program\\ Files/Git/mingw64/bin/git-credential-manager.exe
-{{- end }}
-{{- end }}
+{% endif %}
+{% endif %}
+
+[include]
+	path = config.local

@@ -47,22 +47,15 @@ bindkey '^[[1;5C' forward-word
 alias mkdir='mkdir -p'
 alias sudo='sudo '
 alias sv='sudoedit'
+alias l='eza'
+alias la='eza -a'
+alias ll='eza -l --git --icons'
+alias lla='eza -al --git --icons'
+alias lt='eza -T --icons'
+alias lta='eza -aT --icons'
 
-if (( $+commands[eza] )); then
-  alias l='eza'
-  alias la='eza -a'
-  alias ll='eza -l --git --icons'
-  alias lla='eza -al --git --icons'
-  alias lt='eza -T --icons'
-  alias lta='eza -aT --icons'
-else
-  alias l='ls'
-  alias la='ls -A'
-  alias ll='ls -Al'
-fi
-
-if (( $+commands[direnv] )); then
-  eval "$(direnv hook zsh)"
+if (( $+commands[mise] )); then
+  eval "$(mise activate zsh)"
 fi
 
 if (( $+commands[fzf] )); then

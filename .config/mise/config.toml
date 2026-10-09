@@ -1,0 +1,9 @@
+[settings]
+minimum_release_age = "3d"
+
+[tools]
+eza = "latest"
+fzf = "latest"
+starship = "latest"
+
+codex = "latest"

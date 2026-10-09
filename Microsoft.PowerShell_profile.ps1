@@ -6,6 +6,18 @@ if (Get-Module -ListAvailable -Name git-completion) {
     }
 }
 
+# Aliases
+function l   { eza @args }
+function la  { eza -a @args }
+function ll  { eza -l --git --icons @args }
+function lla  { eza -al --git --icons @args }
+function lt  { eza -T --icons @args }
+function lta { eza -aT --icons @args }
+
+if (Get-Command mise -ErrorAction Ignore) {
+    (&mise activate pwsh) | Out-String | Invoke-Expression
+}
+
 # Interactive shell settings
 if ($Host.Name -eq 'ConsoleHost') {
     Set-PSReadLineOption -BellStyle None -EditMode Emacs
@@ -20,16 +32,6 @@ if ($Host.Name -eq 'ConsoleHost') {
             -PSReadlineChordProvider 'Ctrl+t' `
             -PSReadlineChordReverseHistory 'Ctrl+r'
     }
-}
-
-# eza shortcuts
-if (Get-Command eza -ErrorAction Ignore) {
-    function l   { eza @args }
-    function la  { eza -a @args }
-    function ll  { eza -l --git --icons @args }
-    function lla  { eza -al --git --icons @args }
-    function lt  { eza -T --icons @args }
-    function lta { eza -aT --icons @args }
 }
 
 # Starship prompt

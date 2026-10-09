@@ -1,0 +1,16 @@
+[bootstrap.packages]
+"apt:vim" = "latest"
+"apt:zsh" = "latest"
+
+[bootstrap.user]
+login_shell = "/bin/zsh"
+
+[bootstrap.repos]
+"~/.local/share/zsh/plugins/zas" = { url = "https://github.com/zsh-users/zsh-autosuggestions.git" }
+"~/.local/share/zsh/plugins/fsh" = { url = "https://github.com/zdharma-continuum/fast-syntax-highlighting.git" }
+
+[dotfiles]
+"~/.zshenv" = ".zshenv"
+"~/.config" = { source = ".config", mode = "symlink-each", exclude = [
+    "*.tera",
+] }

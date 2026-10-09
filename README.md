@@ -1,27 +1,46 @@
 # dotfiles
-
-Personal dotfiles managed with [chezmoi](https://www.chezmoi.io/).
+Personal dotfiles and development tools managed with [mise](https://mise.jdx.dev/).
 
 ## Setup
 
-On Linux and other Unix-like systems, install chezmoi and initialize it with this repository:
+Clone this repository and run the bootstrap script for your platform. The script installs mise if needed and applies the configuration.
+
+If mise is not installed, bootstrap requires curl on Linux or WinGet on Windows.
+
+### Linux
 
 ```sh
-sh -c "$(curl -fsLS get.chezmoi.io)" -- -b $HOME/.local/bin
-"$HOME/.local/bin/chezmoi" init --apply <repository-url>
+git clone https://github.com/TiggeZaki/dotfiles.git
+cd ./dotfiles
+./bootstrap.sh
 ```
 
-On Windows, use winget instead:
+### Windows (PowerShell)
 
 ```powershell
-winget install --id twpayne.chezmoi --exact --accept-package-agreements --accept-source-agreements
-chezmoi init --apply <repository-url>
+git clone https://github.com/TiggeZaki/dotfiles.git
+Set-Location .\dotfiles
+.\bootstrap.ps1
 ```
 
-To review subsequent changes before applying them, run:
+Both scripts trust the local checkout and run `mise bootstrap`. Review the configuration before running them. Additional arguments, such as `--dry-run` and `--skip tools`, are forwarded to mise.
+
+## Configuration
+
+Shared tool versions and settings are defined in `.config/mise/config.toml`.
+
+Keep machine-specific settings separate from the shared configuration in the following local files:
+
+- ~/.config/mise/config.local.toml — machine-specific mise tool versions and settings
+- ~/.config/git/config.local — machine-specific Git settings
+- ~/.config/zsh/zshrc.local — machine-specific Zsh settings
+
+## Updates
+
+Pull the latest changes, preview, and apply the configuration:
 
 ```sh
-chezmoi diff
-chezmoi apply --dry-run --verbose
-chezmoi apply
+git pull --ff-only
+mise bootstrap --dry-run
+mise bootstrap
 ```

@@ -3,10 +3,9 @@ local act = wezterm.action
 
 local config = wezterm.config_builder()
 
-{{- if eq .chezmoi.os "windows" }}
-config.default_prog = { "pwsh.exe" }
-{{- end }}
-
+if wezterm.target_triple:find("windows") then
+    config.default_prog = { "pwsh.exe" }
+end
 config.prefer_to_spawn_tabs = true
 
 -- ---------------------------------------------------------------------------

@@ -1,0 +1,7 @@
+[dotfiles]
+"~/Documents/PowerShell/Microsoft.PowerShell_profile.ps1" = "Microsoft.PowerShell_profile.ps1"
+"~/.config" = { source = ".config", mode = "symlink-each", exclude = [
+    "*.tera",
+    "zsh",
+    "vim",
+] }

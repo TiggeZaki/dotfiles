@@ -1,0 +1,2 @@
+[dotfiles]
+"~/.config/git/config" = { source = ".config/git/config.tera", mode = "template" }
